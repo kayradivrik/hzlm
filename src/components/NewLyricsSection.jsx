@@ -136,20 +136,20 @@ export default function NewLyricsSection({ settings }) {
 
         .lyric-card {
           background: var(--card-bg);
-          backdrop-filter: blur(20px);
           border: 1px solid var(--card-border);
-          border-radius: 2rem;
+          border-radius: 1.5rem;
           padding: 2rem;
           position: relative;
           color: var(--text-primary);
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s ease;
           animation: fadeInUp 0.6s ease-out both;
+          box-shadow: 0 4px 6px var(--nav-shadow);
         }
 
         .lyric-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-2px);
           border-color: var(--card-hover-border);
-          box-shadow: 0 15px 30px var(--accent-glow);
+          box-shadow: 0 10px 15px var(--nav-shadow);
         }
 
         .lyric-meta {

@@ -13,149 +13,161 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+@media (max-width: 380px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 340px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 :root {
-  /* Default/Light Theme */
-  --bg-color: #fbfbfb;
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #6b7280;
+  /* Default/Light Theme - Softer */
+  --bg-color: #faf9f8;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
   
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-border: rgba(0, 0, 0, 0.05);
-  --card-hover-bg: rgba(255, 255, 255, 0.9);
-  --card-hover-border: rgba(255, 107, 107, 0.35);
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-border: rgba(0, 0, 0, 0.04);
+  --card-hover-bg: rgba(255, 255, 255, 0.8);
+  --card-hover-border: rgba(255, 107, 107, 0.25);
   
-  --accent-color: #FF6B6B;
-  --accent-glow: rgba(255, 107, 107, 0.2);
+  --accent-color: #f06262; /* Softer red/pink */
+  --accent-glow: rgba(240, 98, 98, 0.15);
   
-  --nav-bg: rgba(255, 255, 255, 0.75);
-  --nav-bg-mobile: rgba(255, 255, 255, 0.85);
-  --nav-shadow: rgba(0, 0, 0, 0.05);
+  --nav-bg: rgba(250, 249, 248, 0.85);
+  --nav-bg-mobile: rgba(250, 249, 248, 0.95);
+  --nav-shadow: rgba(0, 0, 0, 0.03);
   
-  --input-bg: rgba(255, 255, 255, 0.6);
-  --input-border: rgba(0, 0, 0, 0.06);
-  --input-text: #111827;
-  --input-focus-ring: rgba(255, 107, 107, 0.2);
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-border: rgba(0, 0, 0, 0.05);
+  --input-text: #2d3748;
+  --input-focus-ring: rgba(240, 98, 98, 0.15);
   
-  --scroll-thumb: #fecdd3;
-  --modal-bg: #ffffff;
-  --modal-overlay-bg: rgba(255, 255, 255, 0.8);
+  --scroll-thumb: #fde8e8;
+  --modal-bg: #faf9f8;
+  --modal-overlay-bg: rgba(250, 249, 248, 0.9);
 }
 
 [data-theme="sunset"] {
-  /* Warm Sunset Theme */
-  --bg-color: #fffbf7;
-  --text-primary: #2e221d;
-  --text-secondary: #57433a;
-  --text-muted: #856a5e;
+  /* Warm Sunset Theme - Softer */
+  --bg-color: #fdfaf6;
+  --text-primary: #3d312c;
+  --text-secondary: #5e4c45;
+  --text-muted: #8a7369;
   
-  --card-bg: rgba(255, 250, 243, 0.75);
-  --card-border: rgba(249, 115, 22, 0.08);
-  --card-hover-bg: rgba(255, 250, 243, 0.9);
-  --card-hover-border: rgba(249, 115, 22, 0.3);
+  --card-bg: rgba(253, 250, 246, 0.6);
+  --card-border: rgba(234, 88, 12, 0.06);
+  --card-hover-bg: rgba(253, 250, 246, 0.85);
+  --card-hover-border: rgba(234, 88, 12, 0.2);
   
-  --accent-color: #ea580c;
-  --accent-glow: rgba(234, 88, 12, 0.18);
+  --accent-color: #d95e1e; /* Softer orange */
+  --accent-glow: rgba(217, 94, 30, 0.15);
   
-  --nav-bg: rgba(255, 250, 243, 0.8);
-  --nav-bg-mobile: rgba(255, 250, 243, 0.9);
-  --nav-shadow: rgba(234, 88, 12, 0.05);
+  --nav-bg: rgba(253, 250, 246, 0.85);
+  --nav-bg-mobile: rgba(253, 250, 246, 0.95);
+  --nav-shadow: rgba(217, 94, 30, 0.03);
   
-  --input-bg: rgba(255, 255, 255, 0.7);
-  --input-border: rgba(234, 88, 12, 0.1);
-  --input-text: #2e221d;
-  --input-focus-ring: rgba(234, 88, 12, 0.2);
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-border: rgba(217, 94, 30, 0.08);
+  --input-text: #3d312c;
+  --input-focus-ring: rgba(217, 94, 30, 0.15);
   
   --scroll-thumb: #ffedd5;
-  --modal-bg: #fffbf7;
-  --modal-overlay-bg: rgba(255, 250, 243, 0.85);
+  --modal-bg: #fdfaf6;
+  --modal-overlay-bg: rgba(253, 250, 246, 0.9);
 }
 
 [data-theme="aurora"] {
-  /* Cool Aurora Theme */
-  --bg-color: #f7faf9;
-  --text-primary: #0d1e1b;
-  --text-secondary: #2f4541;
-  --text-muted: #5e7a75;
+  /* Cool Aurora Theme - Softer */
+  --bg-color: #f4f8f7;
+  --text-primary: #1f332f;
+  --text-secondary: #3b544f;
+  --text-muted: #6a8a83;
   
-  --card-bg: rgba(245, 249, 248, 0.75);
-  --card-border: rgba(13, 148, 136, 0.08);
-  --card-hover-bg: rgba(245, 249, 248, 0.9);
-  --card-hover-border: rgba(13, 148, 136, 0.3);
+  --card-bg: rgba(244, 248, 247, 0.6);
+  --card-border: rgba(13, 148, 136, 0.06);
+  --card-hover-bg: rgba(244, 248, 247, 0.85);
+  --card-hover-border: rgba(13, 148, 136, 0.2);
   
-  --accent-color: #0d9488;
-  --accent-glow: rgba(13, 148, 136, 0.18);
+  --accent-color: #1a8f85; /* Softer teal */
+  --accent-glow: rgba(26, 143, 133, 0.15);
   
-  --nav-bg: rgba(245, 249, 248, 0.8);
-  --nav-bg-mobile: rgba(245, 249, 248, 0.9);
-  --nav-shadow: rgba(13, 148, 136, 0.05);
+  --nav-bg: rgba(244, 248, 247, 0.85);
+  --nav-bg-mobile: rgba(244, 248, 247, 0.95);
+  --nav-shadow: rgba(26, 143, 133, 0.03);
   
-  --input-bg: rgba(255, 255, 255, 0.7);
-  --input-border: rgba(13, 148, 136, 0.1);
-  --input-text: #0d1e1b;
-  --input-focus-ring: rgba(13, 148, 136, 0.2);
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-border: rgba(26, 143, 133, 0.08);
+  --input-text: #1f332f;
+  --input-focus-ring: rgba(26, 143, 133, 0.15);
   
   --scroll-thumb: #ccfbf1;
-  --modal-bg: #f7faf9;
-  --modal-overlay-bg: rgba(245, 249, 248, 0.85);
+  --modal-bg: #f4f8f7;
+  --modal-overlay-bg: rgba(244, 248, 247, 0.9);
 }
 
 [data-theme="night"] {
-  /* Elegant Cozy Night Theme */
-  --bg-color: #0c0a0f;
-  --text-primary: #faf8f5;
-  --text-secondary: #e2dfda;
-  --text-muted: #8c8680;
+  /* Elegant Cozy Night Theme - Softer */
+  --bg-color: #121212; /* Softer than #0c0a0f */
+  --text-primary: #e4e4e7; /* Softer than pure white */
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
   
-  --card-bg: rgba(20, 17, 26, 0.65);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-hover-bg: rgba(28, 24, 36, 0.85);
-  --card-hover-border: rgba(212, 163, 115, 0.45);
+  --card-bg: rgba(24, 24, 27, 0.6);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --card-hover-bg: rgba(39, 39, 42, 0.8);
+  --card-hover-border: rgba(212, 163, 115, 0.3);
   
-  --accent-color: #d4a373;
-  --accent-glow: rgba(212, 163, 115, 0.2);
+  --accent-color: #c4996c; /* Softer gold */
+  --accent-glow: rgba(196, 153, 108, 0.15);
   
-  --nav-bg: rgba(14, 11, 19, 0.85);
-  --nav-bg-mobile: rgba(14, 11, 19, 0.95);
-  --nav-shadow: rgba(0, 0, 0, 0.2);
+  --nav-bg: rgba(18, 18, 18, 0.85);
+  --nav-bg-mobile: rgba(18, 18, 18, 0.95);
+  --nav-shadow: rgba(0, 0, 0, 0.15);
   
-  --input-bg: rgba(255, 255, 255, 0.03);
-  --input-border: rgba(255, 255, 255, 0.1);
-  --input-text: #ffffff;
-  --input-focus-ring: rgba(212, 163, 115, 0.25);
+  --input-bg: rgba(255, 255, 255, 0.02);
+  --input-border: rgba(255, 255, 255, 0.08);
+  --input-text: #e4e4e7;
+  --input-focus-ring: rgba(196, 153, 108, 0.2);
   
-  --scroll-thumb: #d4a373;
-  --modal-bg: #14111a;
-  --modal-overlay-bg: rgba(6, 5, 8, 0.95);
+  --scroll-thumb: #52525b;
+  --modal-bg: #18181b;
+  --modal-overlay-bg: rgba(18, 18, 18, 0.9);
 }
 
 [data-theme="light"] {
-  /* Pure White Theme */
-  --bg-color: #ffffff;
-  --text-primary: #000000;
-  --text-secondary: #111827;
-  --text-muted: #4b5563;
+  /* Pure White Theme - Softer off-white */
+  --bg-color: #fafafa;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
   
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --card-border: rgba(0, 0, 0, 0.08);
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(0, 0, 0, 0.06);
   --card-hover-bg: #ffffff;
-  --card-hover-border: rgba(255, 107, 107, 0.45);
+  --card-hover-border: rgba(240, 98, 98, 0.3);
   
-  --accent-color: #ff5252;
-  --accent-glow: rgba(255, 82, 82, 0.2);
+  --accent-color: #eb5e5e; /* Softer red */
+  --accent-glow: rgba(235, 94, 94, 0.15);
   
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --nav-bg-mobile: rgba(255, 255, 255, 0.95);
-  --nav-shadow: rgba(0, 0, 0, 0.06);
+  --nav-bg: rgba(250, 250, 250, 0.9);
+  --nav-bg-mobile: rgba(250, 250, 250, 0.95);
+  --nav-shadow: rgba(0, 0, 0, 0.04);
   
-  --input-bg: rgba(255, 255, 255, 0.95);
-  --input-border: rgba(0, 0, 0, 0.08);
-  --input-text: #000000;
-  --input-focus-ring: rgba(255, 82, 82, 0.2);
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-border: rgba(0, 0, 0, 0.06);
+  --input-text: #1f2937;
+  --input-focus-ring: rgba(235, 94, 94, 0.15);
   
-  --scroll-thumb: #ffcdcd;
+  --scroll-thumb: #fee2e2;
   --modal-bg: #ffffff;
-  --modal-overlay-bg: rgba(255, 255, 255, 0.95);
+  --modal-overlay-bg: rgba(250, 250, 250, 0.9);
 }
 
 body {
@@ -188,28 +200,20 @@ body {
 }
 
 .ambient-glow {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(75px);
-  pointer-events: none;
-  z-index: -5;
+  display: none;
 }
 
 .glass-card {
   background: var(--card-bg) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
   border: 1px solid var(--card-border) !important;
-  box-shadow: 0 10px 30px 0 var(--nav-shadow) !important;
+  border-radius: 1rem;
   color: var(--text-primary) !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: all 0.3s ease !important;
 }
 
 .glass-card:hover {
   background: var(--card-hover-bg) !important;
   border-color: var(--card-hover-border) !important;
-  box-shadow: 0 20px 40px 0 var(--accent-glow) !important;
-  transform: translateY(-4px);
 }
 
 .material-symbols-outlined {
@@ -266,18 +270,29 @@ body.modal-open .theme-nav-bottom {
 /* Styled Theme Components */
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-app-accent to-rose-400 text-white font-semibold px-6 py-3 rounded-2xl transition-all duration-300 active:scale-95 hover:opacity-90 flex items-center justify-center gap-2 shadow-[0_4px_14px_0_rgba(244,114,182,0.3)] hover:shadow-[0_6px_20px_rgba(244,114,182,0.45)];
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
   }
   
   .input-field {
     background-color: var(--input-bg) !important;
     border: 1px solid var(--input-border) !important;
     color: var(--input-text) !important;
-    @apply w-full backdrop-blur-sm rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 transition-all duration-300 shadow-sm;
+    @apply w-full rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-2 transition-colors;
   }
   
   .input-field:focus {
     border-color: var(--accent-color) !important;
-    box-shadow: 0 0 0 3px var(--input-focus-ring) !important;
   }
 }

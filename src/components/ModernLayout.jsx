@@ -11,25 +11,8 @@ export default function ModernLayout({
   handleLogout, 
   canAccessSettings
 }) {
-  const [parallaxY, setParallaxY] = useState(0)
-
-  useEffect(() => {
-    const onScroll = () => {
-      setParallaxY(window.scrollY * 0.15)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const themeGlows = useMemo(() => {
-    if (theme === 'aurora') return { top: 'bg-teal-400/10', bottom: 'bg-emerald-300/10' }
-    if (theme === 'sunset') return { top: 'bg-orange-500/10', bottom: 'bg-rose-400/10' }
-    if (theme === 'light') return { top: 'bg-rose-400/5', bottom: 'bg-pink-400/5' }
-    return { top: 'bg-purple-500/10', bottom: 'bg-fuchsia-500/10' }
-  }, [theme])
-
   const navItems = [
-    { id: 'home', icon: 'favorite', label: 'Evim', path: '/' },
+    { id: 'home', icon: 'home', label: 'Evim', path: '/' },
     { id: 'journal', icon: 'auto_stories', label: 'Anılar', path: '/journal', protected: true },
     { id: 'chat', icon: 'forum', label: 'Sohbet', path: '/chat', protected: true },
     { id: 'gallery', icon: 'collections', label: 'Galeri', path: '/gallery', protected: true },
@@ -38,6 +21,8 @@ export default function ModernLayout({
     { id: 'chords', icon: 'AK', label: 'Akor Defteri', path: '/chords', protected: true },
     { id: 'movies', icon: 'movie', label: 'Filmler', path: '/movies', protected: true },
     { id: 'bucketlist', icon: 'checklist', label: 'Hayaller', path: '/bucketlist', protected: true },
+    { id: 'typing', icon: 'KEYBOARD', label: 'Hız Testi', path: '/typing' },
+    { id: 'capsules', icon: 'CAPSULE', label: 'Kapsül', path: '/capsules', protected: true },
   ]
 
   const filteredNavItems = navItems.filter(item => !item.protected || canAccessSettings)
@@ -46,55 +31,43 @@ export default function ModernLayout({
     <div className="relative min-h-screen bg-app-bg text-app-text font-sans overflow-x-hidden transition-colors duration-1000">
       {/* Background Layer */}
       <StarField theme={theme} />
-      
-      {/* Dynamic Glows */}
-      <div 
-        className={`fixed -top-[10%] -left-[10%] w-[60vw] h-[60vw] rounded-full blur-[120px] transition-colors duration-1000 opacity-60 pointer-events-none ${themeGlows.top}`}
-        style={{ transform: `translateY(${parallaxY * 0.2}px)` }}
-      />
-      <div 
-        className={`fixed -bottom-[10%] -right-[10%] w-[60vw] h-[60vw] rounded-full blur-[120px] transition-colors duration-1000 opacity-60 pointer-events-none ${themeGlows.bottom}`}
-        style={{ transform: `translateY(${-parallaxY * 0.2}px)` }}
-      />
 
-      {/* Modern Top Header */}
-      <header className="fixed top-0 left-0 w-full z-[100] px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between backdrop-blur-xl bg-app-card/70 border-b border-app-border transition-all duration-300">
-        <div className="flex items-center gap-2 sm:gap-4 group cursor-pointer" onClick={() => navigate('/')}>
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-app-accent to-rose-400 p-[1px] shadow-lg shadow-app-accent/20 group-hover:scale-110 transition-transform duration-500">
-            <div className="w-full h-full rounded-2xl bg-app-bg flex items-center justify-center overflow-hidden">
-               <img src={settings.logoUrl || '/favicon.svg'} alt="Logo" className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity object-cover" />
-            </div>
+      {/* Minimal Top Header */}
+      <header className="fixed top-0 left-0 w-full z-[100] px-4 py-4 flex items-center justify-between bg-app-bg border-b border-app-border transition-all duration-300">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+          <div className="w-10 h-10 border border-app-border bg-app-card flex items-center justify-center overflow-hidden">
+             <img src={settings.logoUrl || '/favicon.svg'} alt="Logo" className="w-8 h-8 object-cover grayscale" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg sm:text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-app-accent to-rose-400 whitespace-nowrap">
+            <span className="text-xl font-bold tracking-tight text-app-text font-serif">
               {settings.brandTitle}
             </span>
-            <span className="hidden xs:block text-[8px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-app-muted font-medium">Celestial Sanctuary</span>
+            <span className="hidden xs:block text-[10px] uppercase tracking-[0.2em] text-app-muted font-medium">Celestial Sanctuary</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-3">
+        <div className="flex items-center gap-2">
           <button 
             onClick={toggleTheme}
-            className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-app-card border border-app-border flex items-center justify-center hover:bg-app-accent/10 transition-all active:scale-90"
+            className="w-10 h-10 border border-app-border bg-app-card flex items-center justify-center hover:bg-app-accent/10 transition-colors"
           >
-            <span className="material-symbols-outlined text-app-accent text-xl sm:text-2xl">palette</span>
+            <span className="material-symbols-outlined text-app-text">palette</span>
           </button>
 
           {canAccessSettings && (
              <button 
               onClick={() => navigate('/settings')}
-              className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition-all active:scale-90 ${activePage === 'settings' ? 'bg-app-accent/20 border-app-accent text-app-accent' : 'bg-app-card border-app-border text-app-text hover:bg-app-accent/10'}`}
+              className={`w-10 h-10 border flex items-center justify-center transition-colors ${activePage === 'settings' ? 'bg-app-text text-app-bg border-app-text' : 'bg-app-card border-app-border text-app-text hover:bg-app-accent/10'}`}
             >
-              <span className="material-symbols-outlined text-xl sm:text-2xl">settings</span>
+              <span className="material-symbols-outlined">settings</span>
             </button>
           )}
 
           <button 
             onClick={handleLogout}
-            className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-app-card border border-app-border flex items-center justify-center hover:bg-red-500/20 hover:border-red-500/30 transition-all active:scale-90 text-red-400"
+            className="w-10 h-10 border border-app-border bg-app-card flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors"
           >
-            <span className="material-symbols-outlined text-xl sm:text-2xl">logout</span>
+            <span className="material-symbols-outlined">logout</span>
           </button>
         </div>
       </header>
@@ -106,36 +79,37 @@ export default function ModernLayout({
         </div>
       </main>
 
-      {/* Modern Floating Dock Navigation */}
-      <div className="fixed bottom-6 sm:bottom-8 left-0 right-0 z-[100] px-2 flex justify-center pointer-events-none">
-        <nav className="flex items-center gap-0.5 sm:gap-1 p-1 sm:p-2 rounded-[2rem] sm:rounded-[2.5rem] bg-app-card border border-app-border backdrop-blur-2xl shadow-[0_10px_40px_-10px_var(--nav-shadow)] pointer-events-auto max-w-full overflow-x-auto no-scrollbar">
+      {/* Minimal Navigation Bar */}
+      <div className="fixed bottom-0 md:bottom-8 left-0 right-0 z-[100] px-0 md:px-4 flex justify-center pointer-events-none">
+        <nav className="flex items-center justify-start md:justify-center gap-4 sm:gap-6 w-full md:w-auto md:min-w-[400px] max-w-full overflow-x-auto no-scrollbar border-t md:border border-app-border bg-app-bg md:rounded-[2rem] px-4 py-2 pointer-events-auto shadow-sm">
           {filteredNavItems.map((item) => {
             const isActive = activePage === item.id || (item.id === 'home' && activePage === 'home')
             return (
               <button
                 key={item.id}
                 onClick={() => navigate(item.path)}
-                className={`relative group flex items-center justify-center h-10 sm:h-12 transition-all duration-500 ${isActive ? 'px-4 sm:px-6' : 'w-10 sm:w-12 hover:w-14 sm:hover:w-16'}`}
+                className={`flex-shrink-0 flex flex-col items-center gap-1 min-w-[64px] transition-colors py-2 ${isActive ? 'text-app-text' : 'text-app-muted hover:text-app-text'} focus:outline-none`}
               >
-                {isActive && (
-                  <div className="absolute inset-0 rounded-[1.5rem] sm:rounded-[1.8rem] bg-gradient-to-r from-app-accent/15 to-rose-400/15 border border-app-accent/30 animate-in fade-in zoom-in-95 duration-300" />
+                {item.icon === 'AK' ? (
+                  <span className="font-bold tracking-tighter text-lg leading-none">AK</span>
+                ) : item.icon === 'KEYBOARD' ? (
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z M7 10h1v1H7v-1z M11 10h1v1h-1v-1z M15 10h1v1h-1v-1z M7 14h10v1H7v-1z" />
+                  </svg>
+                ) : item.icon === 'CAPSULE' ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-all ${isActive ? 'opacity-100' : 'opacity-70'}`}>
+                    <path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M12 9v3l1.5 1.5" />
+                  </svg>
+                ) : (
+                  <span className={`material-symbols-outlined ${isActive ? 'filled' : ''}`}>
+                    {item.icon}
+                  </span>
                 )}
-                <div className={`flex items-center gap-1.5 sm:gap-2 relative z-10 transition-colors duration-300 ${isActive ? 'text-app-accent' : 'text-app-text group-hover:text-app-accent'}`}>
-                  {item.icon === 'AK' ? (
-                    <span className={`font-bold tracking-tighter ${isActive ? 'text-[14px] sm:text-[16px]' : 'text-[16px] sm:text-[18px]'}`}>
-                      AK
-                    </span>
-                  ) : (
-                    <span className={`material-symbols-outlined ${isActive ? 'text-[20px] sm:text-[22px]' : 'text-[22px] sm:text-[24px]'}`}>
-                      {item.icon}
-                    </span>
-                  )}
-                  {isActive && (
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest whitespace-nowrap overflow-hidden animate-in fade-in slide-in-from-left-2 duration-500 hidden xs:inline">
-                      {item.label}
-                    </span>
-                  )}
-                </div>
+                <span className="text-[10px] font-medium tracking-wide">
+                  {item.label}
+                </span>
               </button>
             )
           })}
@@ -144,35 +118,19 @@ export default function ModernLayout({
 
       <style>{`
         .modern-content-wrapper {
-          animation: page-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          animation: page-enter 0.6s ease-out;
         }
         @keyframes page-enter {
-          from { opacity: 0; transform: translateY(20px); }
+          from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Modern Card Overrides for New Design */
-        [data-design-version="new"] .glass-card {
-          background: var(--card-bg) !important;
-          border: 1px solid var(--card-border) !important;
-          border-radius: 2rem !important;
-          backdrop-filter: blur(25px) !important;
-          box-shadow: 0 20px 40px var(--nav-shadow) !important;
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-        
-        [data-design-version="new"] .glass-card:hover {
-          background: var(--card-hover-bg) !important;
-          border-color: var(--card-hover-border) !important;
-          transform: translateY(-4px) !important;
-        }
 
-        [data-design-version="new"] h1 {
+        h1, h2, h3 {
           font-family: 'Outfit', 'Inter', sans-serif !important;
-          letter-spacing: -0.02em !important;
+          letter-spacing: -0.01em !important;
         }
       `}</style>
     </div>

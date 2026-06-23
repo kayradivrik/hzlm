@@ -154,22 +154,17 @@ export default function NewGallerySection({ settings }) {
           background: var(--accent-color);
           color: #ffffff;
           padding: 0.8rem 1.5rem;
-          sm:padding: 1rem 2rem;
-          border-radius: 1.25rem;
-          sm:border-radius: 1.5rem;
-          font-weight: 700;
+          border-radius: 1rem;
+          font-weight: 600;
           display: flex;
           align-items: center;
           gap: 0.6rem;
-          transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-          box-shadow: 0 10px 20px var(--accent-glow);
+          transition: all 0.2s ease;
           width: fit-content;
         }
 
         .add-photo-btn:hover {
-          transform: translateY(-3px);
           opacity: 0.9;
-          box-shadow: 0 15px 30px var(--accent-glow);
         }
 
         .masonry-grid {
@@ -186,30 +181,28 @@ export default function NewGallerySection({ settings }) {
           break-inside: avoid;
           margin-bottom: 1.5rem;
           position: relative;
-          border-radius: 1.5rem;
+          border-radius: 0.5rem;
           overflow: hidden;
           background: var(--card-bg);
           border: 1px solid var(--card-border);
           cursor: pointer;
-          transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: all 0.3s ease;
           animation: fadeInUp 0.6s ease-out both;
         }
 
         .gallery-item:hover {
-          transform: scale(1.02);
           border-color: var(--card-hover-border);
-          box-shadow: 0 20px 40px var(--accent-glow);
+          box-shadow: 0 4px 12px var(--nav-shadow);
         }
 
         .gallery-item img {
           width: 100%;
           display: block;
-          transition: all 0.7s ease;
+          transition: filter 0.3s ease;
         }
 
         .gallery-item:hover img {
-          filter: brightness(0.7) blur(2px);
-          transform: scale(1.1);
+          filter: brightness(0.85);
         }
 
         .item-overlay {

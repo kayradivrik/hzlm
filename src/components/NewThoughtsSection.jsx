@@ -142,24 +142,24 @@ export default function NewThoughtsSection({ settings, currentUser }) {
 
         .thought-card {
           background: var(--card-bg);
-          backdrop-filter: blur(20px);
           border: 1px solid var(--card-border);
-          border-radius: 1.75rem;
+          border-radius: 1.25rem;
           padding: 2rem;
           position: relative;
           color: var(--text-primary);
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s ease;
           animation: fadeInUp 0.6s ease-out both;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           min-height: 220px;
+          box-shadow: 0 4px 6px var(--nav-shadow);
         }
 
         .thought-card:hover {
-          transform: translateY(-4px);
-          border-color: var(--accent-color);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          transform: translateY(-2px);
+          border-color: var(--card-hover-border);
+          box-shadow: 0 10px 15px var(--nav-shadow);
         }
 
         .thought-meta {
@@ -291,13 +291,13 @@ export default function NewThoughtsSection({ settings, currentUser }) {
         .modal-content {
           background: var(--modal-bg);
           border: 1px solid var(--card-border);
-          border-radius: 2.25rem;
+          border-radius: 1.5rem;
           width: 100%;
           max-width: 600px;
           padding: 3rem;
           position: relative;
           color: var(--text-primary);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .mood-selector {

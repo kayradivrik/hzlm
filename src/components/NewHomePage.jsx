@@ -1,103 +1,125 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function NewHomePage({ settings }) {
-  const containerRef = useRef(null)
+  const [mounted, setMounted] = useState(false)
+  const [elapsed, setElapsed] = useState({ years: 0, months: 0, days: 0, hours: 0, minutes: 0 })
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100', 'translate-y-0')
-            entry.target.classList.remove('opacity-0', 'translate-y-10')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
+    setMounted(true)
+    
+    const startDate = settings.relationshipStartDate 
+      ? new Date(settings.relationshipStartDate) 
+      : new Date('2026-06-08T00:00:00');
 
-    const sections = containerRef.current.querySelectorAll('.animate-on-scroll')
-    sections.forEach((section) => observer.observe(section))
+    const updateTimer = () => {
+      const now = new Date()
+      let diff = now - startDate
+      if (diff < 0) diff = 0
+      
+      const daysTotal = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const years = Math.floor(daysTotal / 365)
+      const months = Math.floor((daysTotal % 365) / 30)
+      const days = (daysTotal % 365) % 30
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      
+      setElapsed({ years, months, days, hours, minutes })
+    }
 
-    return () => observer.disconnect()
-  }, [])
+    updateTimer()
+    const timer = setInterval(updateTimer, 60000)
+    return () => clearInterval(timer)
+  }, [settings.relationshipStartDate])
 
   return (
-    <div ref={containerRef} className="space-y-12 sm:space-y-24 pb-20">
+    <div className={`space-y-12 sm:space-y-24 pb-20 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
       {/* Hero Section */}
-      <section className="animate-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-        <div className="relative px-2 sm:px-0">
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.5em] text-app-accent font-bold mb-4 block">Sana Özel Bir Alan</span>
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-app-text leading-[1.1] sm:leading-tight">
-            {settings.homeTitle}
-            <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-app-accent via-rose-400 to-app-accent bg-[length:200%_auto] animate-gradient-flow italic">
+      <section className="pt-8">
+        <div className="max-w-3xl">
+          <span className="text-sm text-app-accent font-medium mb-3 block">Bize Özel</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-app-text leading-tight mb-4">
+            {settings.homeTitle}{' '}
+            <span className="text-app-accent italic font-serif">
               {settings.homeHighlight}
             </span>
           </h1>
-          <p className="mt-6 sm:mt-8 text-lg sm:text-xl md:text-2xl text-app-text/90 max-w-2xl font-light italic leading-relaxed border-l-2 border-app-accent/30 pl-4 sm:pl-6">
+          <p className="mt-6 text-xl sm:text-2xl text-app-text/80 font-light italic leading-relaxed pl-6 border-l-2 border-app-accent/30">
             "{settings.homeQuote}"
           </p>
         </div>
       </section>
 
-      {/* Purpose & Bento Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
-        {/* Purpose Card - Large */}
-        <div className="md:col-span-8 animate-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-100 ease-out">
-          <div className="glass-card group relative h-full p-6 sm:p-8 overflow-hidden">
-            <div className="absolute -right-20 -top-20 w-64 h-64 bg-app-accent/10 rounded-full blur-[80px] group-hover:bg-app-accent/20 transition-all duration-700" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-app-text mb-4 sm:mb-6 relative z-10">{settings.purposeTitle}</h2>
-            <p className="text-base sm:text-lg text-app-text/90 leading-relaxed relative z-10 whitespace-pre-wrap">
-              {settings.purposeText}
-            </p>
-          </div>
+      {/* Relationship Counter */}
+      <section className="bg-app-card border border-app-border rounded-2xl p-6 sm:p-10 shadow-sm">
+        <div className="text-center mb-6">
+          <span className="text-xs uppercase tracking-widest text-app-muted font-bold">Birlikte Geçen Zaman</span>
         </div>
-
-        {/* Note Card - Vertical */}
-        <div className="md:col-span-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-1000 delay-200 ease-out">
-          <div className="h-full p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-app-accent/15 via-app-accent/5 to-transparent border border-app-accent/20 flex flex-col justify-between hover:shadow-lg hover:border-app-accent/30 hover:-translate-y-1 transition-all duration-500 shadow-md">
-            <div>
-              <span className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-app-accent font-bold">{settings.homeNoteLabel}</span>
-              <p className="mt-4 sm:mt-6 text-lg sm:text-xl italic text-app-text leading-relaxed font-medium">
-                "{settings.homeNoteQuote}"
-              </p>
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
+          {elapsed.years > 0 && (
+            <div className="flex flex-col items-center">
+              <span className="text-3xl sm:text-5xl font-serif text-app-text">{elapsed.years}</span>
+              <span className="text-[10px] sm:text-xs uppercase tracking-widest text-app-muted mt-2">Yıl</span>
             </div>
-            <p className="mt-6 sm:mt-8 text-xs sm:text-sm text-app-muted font-semibold">
-              {settings.homeNoteText}
-            </p>
+          )}
+          {(elapsed.years > 0 || elapsed.months > 0) && (
+            <div className="flex flex-col items-center">
+              <span className="text-3xl sm:text-5xl font-serif text-app-text">{elapsed.months}</span>
+              <span className="text-[10px] sm:text-xs uppercase tracking-widest text-app-muted mt-2">Ay</span>
+            </div>
+          )}
+          <div className="flex flex-col items-center">
+            <span className="text-3xl sm:text-5xl font-serif text-app-text">{elapsed.days}</span>
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-app-muted mt-2">Gün</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="text-3xl sm:text-5xl font-serif text-app-text">{elapsed.hours}</span>
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-app-muted mt-2">Saat</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="text-3xl sm:text-5xl font-serif text-app-text">{elapsed.minutes}</span>
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-app-muted mt-2">Dakika</span>
           </div>
         </div>
+      </section>
 
-        {/* Feature Cards - 3 Columns */}
+      {/* Editorial Content Layout */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 mt-16">
+        {/* Purpose Block */}
+        <div className="bg-app-card border border-app-border rounded-2xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-shadow">
+          <h2 className="text-2xl font-bold text-app-text mb-4 font-serif">{settings.purposeTitle}</h2>
+          <p className="text-lg text-app-text/80 leading-relaxed whitespace-pre-wrap">
+            {settings.purposeText}
+          </p>
+        </div>
+
+        {/* Note Block */}
+        <div className="bg-app-accent/5 border border-app-accent/10 rounded-2xl p-8 sm:p-10 shadow-sm flex flex-col justify-center">
+          <span className="text-sm text-app-accent font-medium mb-3">{settings.homeNoteLabel}</span>
+          <p className="text-xl italic text-app-text leading-relaxed font-serif mb-6">
+            "{settings.homeNoteQuote}"
+          </p>
+          <p className="text-sm text-app-text/70">
+            {settings.homeNoteText}
+          </p>
+        </div>
+      </section>
+
+      {/* Feature Blocks */}
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-12">
         {[
-          { tag: settings.homeCard1Tag, title: settings.homeCard1Title, text: settings.homeCard1Text, delay: 300 },
-          { tag: settings.homeCard2Tag, title: settings.homeCard2Title, text: settings.homeCard2Text, delay: 400 },
-          { tag: settings.homeCard3Tag, title: settings.homeCard3Title, text: settings.homeCard3Text, delay: 500 },
+          { tag: settings.homeCard1Tag, title: settings.homeCard1Title, text: settings.homeCard1Text },
+          { tag: settings.homeCard2Tag, title: settings.homeCard2Title, text: settings.homeCard2Text },
+          { tag: settings.homeCard3Tag, title: settings.homeCard3Title, text: settings.homeCard3Text },
         ].map((card, idx) => (
-          <div key={idx} className="md:col-span-4 animate-on-scroll opacity-0 translate-y-10 transition-all duration-1000 ease-out" style={{ transitionDelay: `${card.delay}ms` }}>
-            <div className="glass-card p-6 sm:p-8 group h-full">
-              <span className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-app-accent font-bold group-hover:text-rose-400 transition-colors">{card.tag}</span>
-              <h3 className="mt-3 sm:mt-4 text-xl sm:text-2xl font-bold text-app-text">{card.title}</h3>
-              <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-app-muted leading-relaxed">
-                {card.text}
-              </p>
-            </div>
+          <div key={idx} className="bg-app-card border border-app-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+            <span className="text-xs text-app-accent font-semibold mb-2 block">{card.tag}</span>
+            <h3 className="text-xl font-bold text-app-text mb-3">{card.title}</h3>
+            <p className="text-sm text-app-text/70 leading-relaxed">
+              {card.text}
+            </p>
           </div>
         ))}
       </section>
-
-      <style>{`
-        @keyframes gradient-flow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-flow {
-          background-size: 200% auto;
-          animation: gradient-flow 6s linear infinite;
-        }
-      `}</style>
     </div>
   )
 }

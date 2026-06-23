@@ -116,9 +116,8 @@ export default function NewBucketListSection({ settings }) {
 
         .progress-dashboard {
           background: var(--card-bg);
-          backdrop-filter: blur(20px);
           border: 1px solid var(--card-border);
-          border-radius: 2.5rem;
+          border-radius: 1.5rem;
           padding: 2.5rem;
           margin-bottom: 3rem;
           display: flex;
@@ -147,7 +146,6 @@ export default function NewBucketListSection({ settings }) {
           justify-content: center;
           position: relative;
           flex-shrink: 0;
-          box-shadow: 0 0 20px var(--accent-glow);
         }
 
         .progress-circle::after {
@@ -201,7 +199,6 @@ export default function NewBucketListSection({ settings }) {
           background: var(--accent-color);
           color: #ffffff;
           border: 1px solid var(--accent-color);
-          box-shadow: 0 5px 15px var(--accent-glow);
         }
 
         .bucket-list {

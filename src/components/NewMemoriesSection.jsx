@@ -189,19 +189,17 @@ export default function NewMemoriesSection({ settings }) {
         }
 
         .memories-header h1 {
-          font-family: 'Outfit', sans-serif;
-          font-size: clamp(2.5rem, 8vw, 4.5rem);
+          font-family: 'Outfit', 'Inter', sans-serif;
+          font-size: clamp(2.5rem, 8vw, 4rem);
           font-weight: 700;
-          background: linear-gradient(135deg, var(--accent-color) 0%, #f472b6 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: var(--text-primary);
           margin-bottom: 1rem;
           letter-spacing: -0.02em;
         }
 
         .memories-header p {
           color: var(--text-muted);
-          font-size: 1.25rem;
+          font-size: 1.15rem;
           max-width: 600px;
           margin: 0 auto;
         }
@@ -217,8 +215,8 @@ export default function NewMemoriesSection({ settings }) {
           left: 50%;
           top: 0;
           bottom: 0;
-          width: 2px;
-          background: linear-gradient(to bottom, transparent, var(--accent-glow) 10%, var(--accent-glow) 90%, transparent);
+          width: 1px;
+          background: var(--card-border);
           transform: translateX(-50%);
         }
 
@@ -233,21 +231,19 @@ export default function NewMemoriesSection({ settings }) {
         .memory-card {
           width: 45%;
           background: var(--card-bg);
-          backdrop-filter: blur(20px);
           border: 1px solid var(--card-border);
-          border-radius: 2rem;
+          border-radius: 1.5rem;
           padding: 1.5rem;
           position: relative;
           color: var(--text-primary);
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s ease;
           animation: fadeInUp 0.6s ease-out both;
+          box-shadow: 0 4px 6px var(--nav-shadow);
         }
 
         .memory-card:hover {
-          transform: translateY(-5px);
-          border-color: var(--card-hover-border);
-          background: var(--card-hover-bg);
-          box-shadow: 0 20px 40px var(--accent-glow);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 15px var(--nav-shadow);
         }
 
         .memory-card.left { margin-right: auto; }
@@ -259,10 +255,9 @@ export default function NewMemoriesSection({ settings }) {
           top: 2rem;
           width: 12px;
           height: 12px;
-          background: var(--accent-color);
+          background: var(--bg-color);
           border-radius: 50%;
-          border: 3px solid var(--bg-color);
-          box-shadow: 0 4px 10px var(--accent-glow);
+          border: 2px solid var(--accent-color);
           z-index: 2;
         }
 

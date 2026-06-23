@@ -289,7 +289,7 @@ export default function NewChordsSection({ settings }) {
 
         .search-input-hand:focus {
           border-color: var(--accent-color);
-          box-shadow: 0 0 15px var(--accent-glow);
+          box-shadow: 0 0 0 3px var(--input-focus-ring);
         }
 
         .search-icon-hand {
@@ -312,13 +312,12 @@ export default function NewChordsSection({ settings }) {
         .chord-index-card {
           position: relative;
           background: var(--card-bg);
-          backdrop-filter: blur(15px);
           border: 1px solid var(--card-border);
-          border-radius: 1.25rem;
+          border-radius: 0.75rem;
           padding: 1.75rem 1.25rem 1.25rem;
           cursor: pointer;
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 8px 20px var(--nav-shadow);
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 6px var(--nav-shadow);
         }
 
         /* Washi Tape - Makes it look completely handdrawn/custom */
@@ -348,9 +347,9 @@ export default function NewChordsSection({ settings }) {
         }
 
         .chord-index-card:hover {
-          transform: translateY(-8px) rotate(1deg);
+          transform: translateY(-4px) rotate(1deg);
           border-color: var(--card-hover-border);
-          box-shadow: 0 15px 30px var(--accent-glow);
+          box-shadow: 0 10px 15px var(--nav-shadow);
         }
 
         .chord-card-badge {

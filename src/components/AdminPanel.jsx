@@ -497,15 +497,13 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
         }
 
         .header-card {
-          background: var(--card-bg);
-          backdrop-filter: blur(20px);
-          border: 1px solid var(--card-border);
-          border-radius: 1.5rem;
-          padding: 1.25rem 1.75rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .dashboard-grid-layout {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.dashboard-grid-layout {
           display: grid;
           grid-template-columns: 280px 1fr;
           gap: 1.5rem;
@@ -513,15 +511,12 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
         }
 
         .side-nav-card {
-          background: var(--card-bg);
-          backdrop-filter: blur(20px);
-          border: 1px solid var(--card-border);
-          border-radius: 1.75rem;
-          padding: 0.75rem;
-          box-shadow: 0 10px 30px var(--nav-shadow);
-        }
-
-        .side-tab-button {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.side-tab-button {
           width: 100%;
           display: flex;
           align-items: center;
@@ -543,22 +538,18 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
         }
 
         .side-tab-button.active {
-          background: var(--accent-color);
-          color: #ffffff;
-          box-shadow: 0 6px 15px var(--accent-glow);
-        }
-
-        .main-panel-card {
-          background: var(--card-bg);
-          backdrop-filter: blur(20px);
-          border: 1px solid var(--card-border);
-          border-radius: 1.75rem;
-          padding: 2.25rem;
-          box-shadow: 0 10px 30px var(--nav-shadow);
-          overflow: hidden;
-        }
-
-        .premium-input-group {
+  background: var(--accent-color);
+  color: #ffffff;
+  border-radius: 0.5rem;
+}
+.main-panel-card {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+.premium-input-group {
           position: relative;
           display: flex;
           flex-direction: column;
@@ -586,12 +577,10 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
         }
 
         .premium-input:focus {
-          border-color: var(--accent-color);
-          box-shadow: 0 0 10px var(--accent-glow);
-          background: var(--card-bg);
-        }
-
-        /* Drag/Drop Box for Uploading Logo */
+  border-color: var(--accent-color);
+  background: var(--card-bg);
+}
+/* Drag/Drop Box for Uploading Logo */
         .upload-dashed-box {
           border: 2px dashed var(--card-border);
           border-radius: 1rem;
@@ -629,18 +618,17 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
         }
 
         .neon-stat-icon {
-          width: 44px;
-          height: 44px;
-          border-radius: 0.85rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: bold;
-          color: #ffffff;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* CRUD lists layout */
+  width: 44px;
+  height: 44px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background: var(--accent-color);
+  color: #ffffff;
+}
+/* CRUD lists layout */
         .chord-list-row {
           display: flex;
           align-items: center;
@@ -667,20 +655,19 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
         }
 
         .chord-row-badge {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--accent-color), #ff6b6b);
-          color: #ffffff;
-          font-weight: 800;
-          font-size: 0.75rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        .chord-row-title-block {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.25rem;
+  background: var(--accent-color);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chord-row-title-block {
           min-width: 0;
         }
 
@@ -814,22 +801,24 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 950px) {
+        @media (max-width: 350px) {
+  .main-panel-card { padding: 0.75rem; }
+  .header-card { padding: 0.75rem; }
+  .chord-list-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .chord-row-meta { width: 100%; justify-content: flex-end; }
+  .neon-stat-card { flex-direction: column; text-align: center; padding: 0.75rem; }
+}
+@media (max-width: 950px) {
           .dashboard-grid-layout {
             grid-template-columns: 1fr;
           }
           .side-nav-card {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            scrollbar-width: none;
-          }
-          .side-nav-card::-webkit-scrollbar {
-            display: none;
-          }
-          .side-tab-button {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.side-tab-button {
             width: auto;
             white-space: nowrap;
             padding: 0.6rem 1rem;
@@ -845,7 +834,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
       <div className="header-card flex items-center justify-between flex-wrap gap-4">
         <div>
           <h2 className="text-xl font-bold text-app-text flex items-center gap-2">
-            <span className="material-symbols-outlined text-app-accent">settings</span>
+            
             Celestial Dashboard
           </h2>
           <p className="text-xs text-app-muted mt-0.5">Sistem ayarları ve tüm sayfa içeriklerinin yönetim merkezi.</p>
@@ -862,9 +851,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
               disabled={saving || loading}
               className="btn-primary-save py-2 px-5 text-sm"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                {saving ? 'sync' : 'save'}
-              </span>
+              
               {saving ? 'Kaydediliyor...' : 'Kaydet'}
             </button>
           )}
@@ -881,7 +868,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
               className={`side-tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
-              <span className="material-symbols-outlined text-[20px]">{tab.icon}</span>
+              
               {tab.label}
             </button>
           ))}
@@ -900,7 +887,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="neon-stat-card">
                   <div className="neon-stat-icon bg-rose-400">
-                    <span className="material-symbols-outlined text-[20px]">auto_stories</span>
+                    
                   </div>
                   <div className="stat-info">
                     <h4>Anılar</h4>
@@ -910,7 +897,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
 
                 <div className="neon-stat-card">
                   <div className="neon-stat-icon bg-sky-400">
-                    <span className="material-symbols-outlined text-[20px]">psychology</span>
+                    
                   </div>
                   <div className="stat-info">
                     <h4>Düşünce</h4>
@@ -920,7 +907,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
 
                 <div className="neon-stat-card">
                   <div className="neon-stat-icon bg-rose-500">
-                    <span className="material-symbols-outlined text-[20px]">music_video</span>
+                    
                   </div>
                   <div className="stat-info">
                     <h4>Akorlar</h4>
@@ -930,7 +917,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
 
                 <div className="neon-stat-card">
                   <div className="neon-stat-icon bg-yellow-500">
-                    <span className="material-symbols-outlined text-[20px]">music_note</span>
+                    
                   </div>
                   <div className="stat-info">
                     <h4>Sözler</h4>
@@ -940,7 +927,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
 
                 <div className="neon-stat-card">
                   <div className="neon-stat-icon bg-teal-500">
-                    <span className="material-symbols-outlined text-[20px]">collections</span>
+                    
                   </div>
                   <div className="stat-info">
                     <h4>Galeri</h4>
@@ -950,7 +937,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
 
                 <div className="neon-stat-card">
                   <div className="neon-stat-icon bg-emerald-500">
-                    <span className="material-symbols-outlined text-[20px]">checklist</span>
+                    
                   </div>
                   <div className="stat-info">
                     <h4>Hayaller</h4>
@@ -972,10 +959,9 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
             </div>
           )}
 
-          {activeTab === 'brand' && (
+                    {activeTab === 'brand' && (
             <div className="space-y-6">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">auto_awesome</span>
                 Marka & Kimlik
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -999,7 +985,6 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                         onChange={e => handleFileUpload(e.target.files?.[0], (url) => updateField('logoUrl', url))}
                       />
                       <label htmlFor="logo-upload-box" className="upload-dashed-box flex-1">
-                        <span className="material-symbols-outlined text-app-accent text-3xl">upload_file</span>
                         <span className="text-xs font-bold text-app-text truncate max-w-[150px]">
                           {form.logoUrl ? 'Görsel Seçildi ✓' : 'Dosya Seç...'}
                         </span>
@@ -1011,12 +996,21 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                       )}
                     </div>
                   </div>
-                </div>
-                <div className="space-y-4">
+                  <div className="premium-input-group">
+                    <label className="premium-label">İlişki Başlangıç Tarihi (Tam Saat)</label>
+                    <input 
+                      type="datetime-local"
+                      value={form.relationshipStartDate || ''} 
+                      onChange={(e) => updateField('relationshipStartDate', e.target.value)} 
+                      className="premium-input" 
+                    />
+                  </div>
                   <div className="premium-input-group">
                     <label className="premium-label">Logo Bağlantısı (URL)</label>
                     <input value={form.logoUrl || ''} onChange={(e) => updateField('logoUrl', e.target.value)} className="premium-input" />
                   </div>
+                </div>
+                <div className="space-y-4">
                   <div className="premium-input-group">
                     <label className="premium-label">Hazal'ın İsmi</label>
                     <input value={form.hazalName || ''} onChange={(e) => updateField('hazalName', e.target.value)} className="premium-input" />
@@ -1034,6 +1028,36 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                       <option value="light">Klasik Beyaz (Açık)</option>
                     </select>
                   </div>
+                  <div className="premium-input-group">
+                    <label className="premium-label">Kayra Fotoğrafı (URL)</label>
+                    <div className="flex gap-2">
+                      <input value={form.kayraAvatarUrl || ''} onChange={(e) => updateField('kayraAvatarUrl', e.target.value)} className="premium-input flex-1" placeholder="Görsel linki..." />
+                      <label className="bg-[#ccc] px-3 py-2 cursor-pointer font-bold text-black border-2 border-outset flex-shrink-0 text-xs flex items-center">
+                        Yükle
+                        <input type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e.target.files?.[0], (url) => updateField('kayraAvatarUrl', url))} />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="premium-input-group">
+                    <label className="premium-label">Hazal Fotoğrafı (URL)</label>
+                    <div className="flex gap-2">
+                      <input value={form.hazalAvatarUrl || ''} onChange={(e) => updateField('hazalAvatarUrl', e.target.value)} className="premium-input flex-1" placeholder="Görsel linki..." />
+                      <label className="bg-[#ccc] px-3 py-2 cursor-pointer font-bold text-black border-2 border-outset flex-shrink-0 text-xs flex items-center">
+                        Yükle
+                        <input type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e.target.files?.[0], (url) => updateField('hazalAvatarUrl', url))} />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="premium-input-group">
+                    <label className="premium-label">Giriş Ekranı Arka Planı (URL)</label>
+                    <div className="flex gap-2">
+                      <input value={form.loginBgUrl || ''} onChange={(e) => updateField('loginBgUrl', e.target.value)} className="premium-input flex-1" placeholder="Görsel linki..." />
+                      <label className="bg-[#ccc] px-3 py-2 cursor-pointer font-bold text-black border-2 border-outset flex-shrink-0 text-xs flex items-center">
+                        Yükle
+                        <input type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e.target.files?.[0], (url) => updateField('loginBgUrl', url))} />
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1042,7 +1066,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'home' && (
             <div className="space-y-6">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">home</span>
+                
                 Ana Sayfa Metinleri
               </h3>
               <div className="space-y-4">
@@ -1077,7 +1101,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'cards' && (
             <div className="space-y-6">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">view_quilt</span>
+                
                 Ekstra Bilgi Kartları
               </h3>
               <div className="space-y-6">
@@ -1112,7 +1136,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'note' && (
             <div className="space-y-6">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">history_edu</span>
+                
                 Günün Notu
               </h3>
               <div className="space-y-4">
@@ -1136,7 +1160,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
             <div className="space-y-8 w-full max-w-full overflow-hidden">
               <div>
                 <h3 id="chords-editor-title" className="form-section-title">
-                  <span className="material-symbols-outlined text-app-accent">music_video</span>
+                  
                   {editingChordId ? 'Akoru Düzenle' : 'Yeni Şarkı & Akor Ekle'}
                 </h3>
 
@@ -1253,8 +1277,8 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                         <div className="chord-row-meta">
                           <span className="badge-pill-micro text-rose-400 font-mono font-bold">{chord.originalKey || 'Ton'}</span>
                           {chord.capo > 0 && <span className="badge-pill-micro">Kapo {chord.capo}</span>}
-                          <button onClick={() => handleStartEditChord(chord)} className="btn-trash-micro" type="button"><span className="material-symbols-outlined text-[18px]">edit</span></button>
-                          <button onClick={() => handleDeleteChord(chord._id)} className="btn-trash-micro delete" type="button"><span className="material-symbols-outlined text-[18px]">delete</span></button>
+                          <button onClick={() => handleStartEditChord(chord)} className="btn-trash-micro text-xs px-2 w-auto" type="button">Düzenle</button>
+                          <button onClick={() => handleDeleteChord(chord._id)} className="btn-trash-micro delete text-xs px-2 w-auto" type="button">Sil</button>
                         </div>
                       </div>
                     ))}
@@ -1267,7 +1291,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'lyrics' && (
             <div className="space-y-6 w-full max-w-full overflow-hidden">
               <h3 id="lyrics-editor-title" className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">music_note</span>
+                
                 {editingLyricId ? 'Sözü Düzenle' : 'Söz Defterine Ekle'}
               </h3>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
@@ -1330,8 +1354,8 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                             </div>
                           </div>
                           <div className="chord-row-meta">
-                            <button onClick={() => handleStartEditLyric(ly)} className="btn-trash-micro" type="button"><span className="material-symbols-outlined text-[18px]">edit</span></button>
-                            <button onClick={() => handleDeleteLyric(ly._id)} className="btn-trash-micro delete" type="button"><span className="material-symbols-outlined text-[18px]">delete</span></button>
+                            <button onClick={() => handleStartEditLyric(ly)} className="btn-trash-micro text-xs px-2 w-auto" type="button">Düzenle</button>
+                            <button onClick={() => handleDeleteLyric(ly._id)} className="btn-trash-micro delete text-xs px-2 w-auto" type="button">Sil</button>
                           </div>
                         </div>
                       ))}
@@ -1345,7 +1369,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'thoughts' && (
             <div className="space-y-6 w-full max-w-full overflow-hidden">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">psychology</span>
+                
                 Düşünce Defterini Yönet
               </h3>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
@@ -1392,7 +1416,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                             </div>
                           </div>
                           <div className="chord-row-meta">
-                            <button onClick={() => handleDeleteThought(th._id)} className="btn-trash-micro delete" type="button"><span className="material-symbols-outlined text-[18px]">delete</span></button>
+                            <button onClick={() => handleDeleteThought(th._id)} className="btn-trash-micro delete text-xs px-2 w-auto" type="button">Sil</button>
                           </div>
                         </div>
                       ))}
@@ -1406,7 +1430,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'gallery' && (
             <div className="space-y-6 w-full max-w-full overflow-hidden">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">collections</span>
+                
                 Fotoğraf Galerisini Yönet
               </h3>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
@@ -1422,7 +1446,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                         onChange={e => handleFileUpload(e.target.files?.[0], (url) => setNewGallery(prev => ({ ...prev, imageUrl: url })))}
                       />
                       <label htmlFor="gallery-file-picker" className="upload-dashed-box flex-1">
-                        <span className="material-symbols-outlined text-teal-400 text-3xl">add_photo_alternate</span>
+                        
                         <span className="text-xs font-bold text-app-text truncate max-w-[150px]">
                           {newGallery.imageUrl ? 'Görsel Yüklendi ✓' : 'Dosya Seç...'}
                         </span>
@@ -1472,7 +1496,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                               className="self-end bg-red-500 hover:bg-red-600 text-white rounded-full p-1"
                               type="button"
                             >
-                              <span className="material-symbols-outlined text-[14px]">delete</span>
+                              
                             </button>
                           </div>
                         </div>
@@ -1487,7 +1511,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
           {activeTab === 'bucketlist' && (
             <div className="space-y-6 w-full max-w-full overflow-hidden">
               <h3 className="form-section-title">
-                <span className="material-symbols-outlined text-app-accent">checklist</span>
+                
                 Hayaller & Hedefler (Bucket List)
               </h3>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
@@ -1543,7 +1567,7 @@ export default function AdminPanel({ settings, setSettings, settingsEndpoint, lo
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-[9px] bg-slate-100 dark:bg-slate-800 text-app-muted px-2 py-0.5 rounded font-bold">{item.category}</span>
-                            <button onClick={() => handleDeleteBucket(item._id)} className="btn-trash-micro delete" type="button"><span className="material-symbols-outlined text-[16px]">delete</span></button>
+                            <button onClick={() => handleDeleteBucket(item._id)} className="btn-trash-micro delete text-xs px-2 w-auto" type="button">Sil</button>
                           </div>
                         </div>
                       ))}

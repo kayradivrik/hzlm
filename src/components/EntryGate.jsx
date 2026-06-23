@@ -6,6 +6,8 @@ export default function EntryGate({ settings, loginEndpoint, onGuestEnter, onLog
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(true)
 
   const kayraLabel = settings?.kayraName || 'Kayra'
   const HazalLabel = settings?.hazalName || 'Hazal'
@@ -15,6 +17,7 @@ export default function EntryGate({ settings, loginEndpoint, onGuestEnter, onLog
     setSelectedUser(user)
     setPassword('')
     setError('')
+    setShowPassword(false)
     setStep('password')
   }
 
@@ -41,109 +44,239 @@ export default function EntryGate({ settings, loginEndpoint, onGuestEnter, onLog
   }
 
   return (
-    <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-lg items-center px-6 py-10">
-      {step === 'choose' ? (
-        <div className="w-full">
-          <header className="mb-12 text-center">
-            <h1 className="font-headline text-4xl italic text-app-accent drop-shadow-[0_0_15px_var(--accent-glow)] md:text-5xl">
-              Celestial Sanctuary
-            </h1>
-            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-app-muted">Sonsuz Bir Yolculuk</p>
-          </header>
+    <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-4xl items-center justify-center p-4 md:p-6 lg:p-8">
+      <div className="w-full overflow-hidden bg-[#1a1a1a] border border-[#333] flex flex-col md:flex-row min-h-[550px] md:min-h-[600px]">
+        
+        {/* Left Side: Visual Sidebar (hidden on mobile, shown on md+) */}
+        <div className="relative hidden md:flex w-1/2 flex-col justify-between p-8 overflow-hidden select-none border-r border-[#333]">
+          {/* Background Image with Dark Overlay */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={settings?.loginBgUrl || '/dune_background.png'} 
+              alt="Dune Landscape" 
+              className="h-full w-full object-cover object-center grayscale opacity-30"
+            />
+            {/* Soft solid overlay */}
+            <div className="absolute inset-0 bg-[#1a1a1a]/80" />
+          </div>
 
-          <div className="glass-card rounded-[2.5rem] p-10 md:p-14">
-            <div className="mb-10 text-center">
-              <h2 className="font-headline text-3xl text-app-text">Hoş Geldiniz</h2>
-              <div className="mx-auto mt-3 h-[2px] w-12 bg-gradient-to-r from-transparent via-app-accent/40 to-transparent" />
+          {/* Top Row: Logo & Brand & Guest Entry */}
+          <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <span className="font-headline text-lg font-bold tracking-wider text-white">
+                {settings?.brandTitle || 'Celestial'}
+              </span>
             </div>
+            <button
+              onClick={onGuestEnter}
+              className="flex items-center gap-1.5 border border-[#444] bg-[#222] hover:bg-[#333] px-4 py-1.5 text-xs text-white transition-colors cursor-pointer"
+            >
+              Ziyaretçi Girişi
+              <span className="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
 
-            <div className="mb-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-              <button
-                type="button"
-                onClick={() => startPasswordStep('Kayra')}
-                className="group flex flex-col items-center gap-4 rounded-3xl bg-app-card border border-app-border p-6 transition-all duration-300 hover:border-app-accent/50 hover:bg-app-accent/5 hover:scale-[1.02] active:scale-95"
-              >
-                <div className="flex h-24 w-24 items-center justify-center rounded-full border border-app-border bg-app-bg text-2xl font-semibold text-app-text transition-colors group-hover:border-app-accent group-hover:text-app-accent">
-                  K
-                </div>
-                <span className="font-headline text-xl text-app-text transition-colors group-hover:text-app-accent">{kayraLabel}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => startPasswordStep('Hazal')}
-                className="group flex flex-col items-center gap-4 rounded-3xl bg-app-card border border-app-border p-6 transition-all duration-300 hover:border-app-accent/50 hover:bg-app-accent/5 hover:scale-[1.02] active:scale-95"
-              >
-                <div className="flex h-24 w-24 items-center justify-center rounded-full border border-app-border bg-app-bg text-2xl font-semibold text-app-text transition-colors group-hover:border-app-accent group-hover:text-app-accent">
-                  Z
-                </div>
-                <span className="font-headline text-xl text-app-text transition-colors group-hover:text-app-accent">{HazalLabel}</span>
-              </button>
+          {/* Bottom Row: Quote and Pagination dots */}
+          <div className="relative z-10 mt-auto space-y-6">
+            <p className="text-lg font-medium tracking-wide text-white leading-relaxed font-serif italic max-w-sm">
+              "{settings?.homeQuote || 'Sonsuz Bir Yolculuk'}"
+            </p>
+            
+            {/* Pagination Dots */}
+            <div className="flex items-center gap-2 pt-2">
+              <span className="h-1.5 w-6 rounded-full bg-white transition-all duration-300" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white/40 transition-all duration-300" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white/40 transition-all duration-300" />
             </div>
+          </div>
+        </div>
 
-            <div className="flex flex-col items-center gap-6">
+        {/* Right Side: Form/Action Panel */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center px-4 py-8 sm:px-6 sm:py-10 md:px-12 md:py-16 bg-[#1a1a1a]">
+          {step === 'choose' ? (
+            <div className="w-full max-w-sm mx-auto space-y-8 animate-fade-in">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tight text-white font-sans">
+                  Giriş Yap
+                </h2>
+                <p className="text-sm text-gray-400">
+                  Devam etmek için profilini seç.
+                </p>
+              </div>
+
+              {/* Profile Selection Row */}
+              <div className="grid grid-cols-2 gap-4">
+                {/* Kayra Profile Card */}
+                <button
+                  type="button"
+                  onClick={() => startPasswordStep('Kayra')}
+                  className="group flex flex-col items-center gap-3 bg-[#222] border border-[#333] hover:border-gray-400 p-5 transition-colors cursor-pointer"
+                >
+                  <div className="flex h-16 w-16 items-center justify-center overflow-hidden bg-[#333] text-xl font-bold text-white transition-transform group-hover:scale-105">
+                    {settings?.kayraAvatarUrl ? (
+                      <img src={settings.kayraAvatarUrl} alt={kayraLabel} className="h-full w-full object-cover grayscale opacity-80" />
+                    ) : (
+                      'K'
+                    )}
+                  </div>
+                  <span className="font-semibold text-gray-400 group-hover:text-white">
+                    {kayraLabel}
+                  </span>
+                </button>
+
+                {/* Hazal Profile Card */}
+                <button
+                  type="button"
+                  onClick={() => startPasswordStep('Hazal')}
+                  className="group flex flex-col items-center gap-3 bg-[#222] border border-[#333] hover:border-gray-400 p-5 transition-colors cursor-pointer"
+                >
+                  <div className="flex h-16 w-16 items-center justify-center overflow-hidden bg-[#333] text-xl font-bold text-white transition-transform group-hover:scale-105">
+                    {settings?.hazalAvatarUrl ? (
+                      <img src={settings.hazalAvatarUrl} alt={HazalLabel} className="h-full w-full object-cover grayscale opacity-80" />
+                    ) : (
+                      'Z'
+                    )}
+                  </div>
+                  <span className="font-semibold text-gray-400 group-hover:text-white">
+                    {HazalLabel}
+                  </span>
+                </button>
+              </div>
+
+              {/* Divider */}
+              <div className="relative flex items-center justify-center py-2">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-[#333]"></div>
+                </div>
+                <span className="relative px-3 text-[11px] uppercase tracking-wider text-gray-500 bg-[#1a1a1a]">
+                  Veya
+                </span>
+              </div>
+
+              {/* Guest Access Button */}
               <button
                 type="button"
                 onClick={onGuestEnter}
-                className="group flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-app-muted transition-colors hover:text-app-accent"
+                className="w-full flex items-center justify-center gap-2 border border-[#333] hover:border-gray-500 bg-[#222] hover:bg-[#333] py-3.5 px-4 text-sm font-semibold text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
-                Misafir Olarak Göz At
-                <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+                <span className="material-symbols-outlined text-lg">explore</span>
+                Ziyaretçi Olarak Göz At
               </button>
             </div>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full">
-          <header className="mb-12 text-center">
-            <h1 className="font-headline text-4xl italic text-app-accent drop-shadow-[0_0_15px_var(--accent-glow)]">Celestial Sanctuary</h1>
-          </header>
-
-          <div className="glass-card w-full rounded-[2.5rem] p-8 md:p-10">
-            <div className="mb-6 flex justify-center">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full border border-app-border bg-app-bg text-2xl font-semibold text-app-text">
-                {selectedUser === 'Hazal' ? 'Z' : 'K'}
-              </div>
-            </div>
-
-            <h2 className="text-center font-headline text-4xl text-app-text">{selectedLabel}</h2>
-            <p className="mb-8 mt-2 text-center text-sm text-app-muted">Lütfen Şifreni Gir</p>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input-field w-full px-4 py-4 text-center text-2xl tracking-[0.5em] outline-none placeholder:text-app-muted/30"
-                placeholder="••••••••"
-              />
-
+          ) : (
+            <div className="w-full max-w-sm mx-auto space-y-8 animate-fade-in">
+              {/* Back Button */}
               <button
-                type="submit"
-                disabled={loading || !password}
-                className="btn-primary w-full py-4 text-sm font-bold uppercase tracking-[0.2em] transition-all hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+                type="button"
+                onClick={() => {
+                  setStep('choose')
+                  setPassword('')
+                  setError('')
+                }}
+                className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-400 hover:text-white uppercase tracking-wider transition-colors duration-200 cursor-pointer"
               >
-                {loading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
+                <span className="material-symbols-outlined text-sm">arrow_back</span>
+                Geri Dön
               </button>
-            </form>
 
-            {error ? <p className="mt-4 text-center text-sm text-red-400 font-medium">{error}</p> : null}
+              <div className="space-y-4">
+                {/* Active user display */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center overflow-hidden text-base font-bold text-white bg-[#333]">
+                    {selectedUser === 'Hazal' ? (
+                      settings?.hazalAvatarUrl ? (
+                        <img src={settings.hazalAvatarUrl} alt={HazalLabel} className="h-full w-full object-cover" />
+                      ) : (
+                        'Z'
+                      )
+                    ) : (
+                      settings?.kayraAvatarUrl ? (
+                        <img src={settings.kayraAvatarUrl} alt={kayraLabel} className="h-full w-full object-cover" />
+                      ) : (
+                        'K'
+                      )
+                    )}
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white leading-none">
+                      {selectedLabel}
+                    </h2>
+                    <p className="text-xs text-gray-400 mt-1.5">
+                      Hesabına giriş yapılıyor
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setStep('choose')
-                setPassword('')
-                setError('')
-              }}
-              className="group mx-auto mt-8 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-app-muted transition-colors hover:text-app-accent"
-            >
-              <span className="material-symbols-outlined text-sm">arrow_back</span>
-              Geri Dön
-            </button>
-          </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Password field with show/hide toggle */}
+                <div className="space-y-2">
+                  <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+                    Şifre
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Şifreni gir"
+                      className="w-full bg-[#222] border border-[#333] focus:border-gray-500 focus:outline-none px-4 py-3.5 pr-11 text-sm transition-colors text-white placeholder:text-gray-600"
+                      required
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors cursor-pointer"
+                    >
+                      <span className="material-symbols-outlined text-xl">
+                        {showPassword ? 'visibility_off' : 'visibility'}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Keep me logged in checkbox */}
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="h-4 w-4 rounded border-white/10 bg-white/[0.05] text-[#7C5DFA] focus:ring-[#7C5DFA]/50 focus:ring-offset-0 focus:ring-1"
+                  />
+                  <span className="text-xs text-gray-400 font-medium">Oturumu açık tut</span>
+                </label>
+
+                {/* Error Box */}
+                {error && (
+                  <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+                    <p className="text-xs text-red-400 font-medium text-center">{error}</p>
+                  </div>
+                )}
+
+                {/* Submit button */}
+                <button
+                  type="submit"
+                  disabled={loading || !password}
+                  className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-200 disabled:bg-gray-600 text-black font-semibold py-3.5 px-4 text-sm transition-colors disabled:cursor-not-allowed cursor-pointer"
+                >
+                  {loading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Giriş Yapılıyor...
+                    </>
+                  ) : (
+                    'Giriş Yap'
+                  )}
+                </button>
+              </form>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </main>
   )
 }

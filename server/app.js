@@ -39,6 +39,10 @@ const defaultSettings = {
   purposeTitle: "Hazal'ya bu siteyi yapma amacim",
   purposeText:
     'Sana hissettiklerimi siradan bir mesajla degil, kalici bir sey ile anlatmak istedim. Bu sayfa ikimizin anilarini saklasin diye var.',
+  kayraAvatarUrl: '',
+  hazalAvatarUrl: '',
+  loginBgUrl: '/dune_background.png',
+  relationshipStartDate: '',
 }
 
 const memorySchema = new mongoose.Schema(
@@ -120,6 +124,10 @@ const settingsSchema = new mongoose.Schema(
     logoUrl: String,
     purposeTitle: String,
     purposeText: String,
+    kayraAvatarUrl: String,
+    hazalAvatarUrl: String,
+    loginBgUrl: String,
+    relationshipStartDate: String,
   },
   { versionKey: false },
 )
@@ -173,6 +181,28 @@ const BucketListItem = mongoose.models.BucketListItem || mongoose.model('BucketL
 const ChatMessage = mongoose.models.ChatMessage || mongoose.model('ChatMessage', chatMessageSchema)
 const Lyrics = mongoose.models.Lyrics || mongoose.model('Lyrics', lyricsSchema)
 const Chord = mongoose.models.Chord || mongoose.model('Chord', chordSchema)
+
+const capsuleSchema = new mongoose.Schema(
+  {
+    title: { type: String, trim: true, required: true, maxlength: 300 },
+    message: { type: String, required: true, trim: true, maxlength: 5000 },
+    unlockDate: { type: Date, required: true },
+    author: { type: String, enum: ['Kayra', 'Hazal'], required: true },
+  },
+  { versionKey: false, timestamps: true },
+)
+const Capsule = mongoose.models.Capsule || mongoose.model('Capsule', capsuleSchema)
+
+const typingScoreSchema = new mongoose.Schema(
+  {
+    author: { type: String, enum: ['Kayra', 'Hazal'], required: true },
+    wpm: { type: Number, required: true },
+    accuracy: { type: Number, required: true },
+  },
+  { versionKey: false, timestamps: true },
+)
+const TypingScore = mongoose.models.TypingScore || mongoose.model('TypingScore', typingScoreSchema)
+
 
 let connectionPromise = null
 
@@ -486,6 +516,10 @@ app.put('/api/settings', verifyAuth, async (req, res) => {
     logoUrl: String(req.body?.logoUrl || '').trim(),
     purposeTitle: String(req.body?.purposeTitle || '').trim(),
     purposeText: String(req.body?.purposeText || '').trim(),
+    kayraAvatarUrl: String(req.body?.kayraAvatarUrl || '').trim(),
+    hazalAvatarUrl: String(req.body?.hazalAvatarUrl || '').trim(),
+    loginBgUrl: String(req.body?.loginBgUrl || '').trim(),
+    relationshipStartDate: String(req.body?.relationshipStartDate || '').trim(),
   }
 
   const saved = await SiteSettings.findOneAndUpdate(
@@ -895,6 +929,87 @@ app.patch('/api/chords/:id', verifyAuth, async (req, res) => {
     res.json(existing.toObject())
   } catch {
     res.status(500).json({ message: 'Güncelleme başarısız.' })
+  }
+})
+
+
+app.get('/api/capsules', async (req, res) => {
+  try {
+    const items = await Capsule.find().sort({ unlockDate: 1 }).lean()
+    const now = Date.now()
+    const mapped = items.map(c => {
+      const isLocked = new Date(c.unlockDate).getTime() > now
+      if (isLocked) {
+        return { _id: c._id, title: c.title, unlockDate: c.unlockDate, author: c.author, isLocked: true }
+      }
+      return { ...c, isLocked: false }
+    })
+    res.json(mapped)
+  } catch {
+    res.status(500).json({ message: 'Zaman kapsülleri getirilemedi.' })
+  }
+})
+
+app.post('/api/capsules', verifyAuth, async (req, res) => {
+  const title = typeof req.body?.title === 'string' ? req.body.title.trim() : ''
+  const message = typeof req.body?.message === 'string' ? req.body.message.trim() : ''
+  const unlockDateStr = typeof req.body?.unlockDate === 'string' ? req.body.unlockDate.trim() : ''
+  
+  if (!title || !message || !unlockDateStr) return res.status(400).json({ message: 'Eksik alanlar var.' })
+  
+  const unlockDate = new Date(unlockDateStr)
+  if (isNaN(unlockDate.getTime())) return res.status(400).json({ message: 'Geçersiz tarih.' })
+  
+  try {
+    const created = await Capsule.create({
+      title,
+      message,
+      unlockDate,
+      author: req.authUser === 'Hazal' ? 'Hazal' : 'Kayra'
+    })
+    res.status(201).json(created)
+  } catch {
+    res.status(500).json({ message: 'Kapsül mühürlenemedi.' })
+  }
+})
+
+app.delete('/api/capsules/:id', verifyAuth, async (req, res) => {
+  try {
+    const existing = await Capsule.findById(req.params.id).lean()
+    if (!existing) return res.status(404).json({ message: 'Kayıt bulunamadı.' })
+    if (existing.author !== req.authUser) return res.status(403).json({ message: 'Bunu sen mühürlemedin.' })
+    await Capsule.findByIdAndDelete(req.params.id)
+    res.json({ ok: true })
+  } catch {
+    res.status(500).json({ message: 'Silme başarısız.' })
+  }
+})
+
+
+app.get('/api/typing-scores', async (req, res) => {
+  try {
+    const scores = await TypingScore.find().sort({ wpm: -1, accuracy: -1 }).limit(50).lean()
+    res.json(scores)
+  } catch {
+    res.status(500).json({ message: 'Skorlar getirilemedi.' })
+  }
+})
+
+app.post('/api/typing-scores', verifyAuth, async (req, res) => {
+  const wpm = Number(req.body?.wpm)
+  const accuracy = Number(req.body?.accuracy)
+  
+  if (isNaN(wpm) || isNaN(accuracy)) return res.status(400).json({ message: 'Geçersiz skor.' })
+  
+  try {
+    const created = await TypingScore.create({
+      wpm,
+      accuracy,
+      author: req.authUser === 'Hazal' ? 'Hazal' : 'Kayra'
+    })
+    res.status(201).json(created)
+  } catch {
+    res.status(500).json({ message: 'Skor kaydedilemedi.' })
   }
 })
 

@@ -232,7 +232,7 @@ export default function NewMoviesSection({ settings }) {
         .search-input:focus {
           border-color: var(--accent-color);
           background: var(--input-bg);
-          box-shadow: 0 0 20px var(--accent-glow);
+          box-shadow: 0 0 0 3px var(--input-focus-ring);
         }
 
         .search-results {
@@ -281,7 +281,6 @@ export default function NewMoviesSection({ settings }) {
         .tab-btn.active {
           background: var(--accent-color);
           color: #ffffff;
-          box-shadow: 0 10px 20px var(--accent-glow);
           border-color: var(--accent-color);
         }
 
@@ -303,9 +302,9 @@ export default function NewMoviesSection({ settings }) {
         }
 
         .movie-card:hover {
-          transform: translateY(-10px) scale(1.02);
+          transform: translateY(-4px);
           border-color: var(--card-hover-border);
-          box-shadow: 0 20px 40px var(--accent-glow);
+          box-shadow: 0 10px 20px var(--nav-shadow);
         }
 
         .movie-poster {
@@ -363,7 +362,7 @@ export default function NewMoviesSection({ settings }) {
           position: fixed;
           inset: 0;
           background: var(--modal-overlay-bg);
-          backdrop-filter: blur(24px);
+          backdrop-filter: blur(10px);
           z-index: 1000;
           display: flex;
           align-items: center;
@@ -389,8 +388,8 @@ export default function NewMoviesSection({ settings }) {
           inset: 0;
           background-size: cover;
           background-position: center;
-          filter: blur(40px) brightness(0.25);
-          opacity: 0.55;
+          filter: blur(20px) brightness(0.2);
+          opacity: 0.3;
           pointer-events: none;
           z-index: 1;
         }
@@ -398,7 +397,7 @@ export default function NewMoviesSection({ settings }) {
         .modal-overlay-gradient {
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, rgba(12, 10, 15, 0.95) 0%, rgba(12, 10, 15, 0.75) 100%);
+          background: rgba(12, 10, 15, 0.85);
           pointer-events: none;
           z-index: 2;
         }

@@ -12,6 +12,8 @@ import NewMoviesSection from './components/NewMoviesSection'
 import NewBucketListSection from './components/NewBucketListSection'
 import NewLyricsSection from './components/NewLyricsSection'
 import NewChordsSection from './components/NewChordsSection'
+import NewTimeCapsuleSection from './components/NewTimeCapsuleSection'
+import NewTypingTestSection from './components/NewTypingTestSection'
 
 const defaultSettings = {
   brandTitle: 'Kayra & Hazal',
@@ -37,6 +39,10 @@ const defaultSettings = {
   purposeTitle: "Hazal'ya bu siteyi yapma amacim",
   purposeText:
     'Sana hissettiklerimi siradan bir mesajla degil, kalici bir sey ile anlatmak istedim. Bu sayfa ikimizin anilarini saklasin diye var.',
+  kayraAvatarUrl: '',
+  hazalAvatarUrl: '',
+  loginBgUrl: '/dune_background.png',
+  relationshipStartDate: '2026-06-08T00:00:00', // 8 Haziran
 }
 
 function getActivePage(pathname) {
@@ -49,6 +55,8 @@ function getActivePage(pathname) {
   if (p === '/bucketlist') return 'bucketlist'
   if (p === '/lyrics') return 'lyrics'
   if (p === '/chords') return 'chords'
+  if (p === '/capsules') return 'capsules'
+  if (p === '/typing') return 'typing'
   if (p === '/settings') return 'settings'
   return 'home'
 }
@@ -82,12 +90,7 @@ export default function App() {
     })
   }
 
-  const themeGlows = useMemo(() => {
-    if (theme === 'aurora') return { top: 'bg-teal-400/15', bottom: 'bg-emerald-300/15' }
-    if (theme === 'sunset') return { top: 'bg-orange-400/15', bottom: 'bg-rose-400/15' }
-    if (theme === 'light') return { top: 'bg-rose-300/10', bottom: 'bg-pink-300/10' }
-    return { top: 'bg-purple-600/20', bottom: 'bg-fuchsia-500/20' }
-  }, [theme])
+
 
   const apiBase = import.meta.env.VITE_API_BASE_URL || ''
   const resolvedApiBase = import.meta.env.DEV
@@ -193,6 +196,8 @@ export default function App() {
       {activePage === 'bucketlist' && <NewBucketListSection settings={settings} />}
       {activePage === 'lyrics' && <NewLyricsSection settings={settings} />}
       {activePage === 'chords' && <NewChordsSection settings={settings} />}
+      {activePage === 'capsules' && <NewTimeCapsuleSection settings={settings} currentUser={authState.user} />}
+      {activePage === 'typing' && <NewTypingTestSection settings={settings} currentUser={authState.user} />}
 
       {activePage === 'settings' ? (
         <section className="fade-section space-y-8 pb-8" data-fade>
@@ -223,8 +228,7 @@ export default function App() {
     return (
       <div className="relative min-h-screen overflow-hidden font-sans text-app-text">
         <StarField theme={theme} />
-        <div className={`ambient-glow left-[-120px] top-[-80px] h-[240px] w-[240px] md:h-[340px] md:w-[340px] transition-colors duration-1000 ${themeGlows.top}`} />
-        <div className={`ambient-glow bottom-[5%] right-[-120px] h-[260px] w-[260px] animate-float md:h-[360px] md:w-[360px] transition-colors duration-1000 ${themeGlows.bottom}`} />
+
         <EntryGate settings={settings} loginEndpoint={loginEndpoint} onGuestEnter={handleGuestEnter} onLoginSuccess={handleLoginSuccess} />
       </div>
     )

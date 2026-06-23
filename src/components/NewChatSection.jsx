@@ -76,9 +76,8 @@ export default function NewChatSection({ currentUser }) {
           display: flex;
           flex-direction: column;
           background: var(--card-bg);
-          backdrop-filter: blur(20px);
           border: 1px solid var(--card-border);
-          border-radius: 2.5rem;
+          border-radius: 1rem;
           overflow: hidden;
           color: var(--text-primary);
           animation: fadeInUp 0.8s ease-out;
@@ -162,11 +161,10 @@ export default function NewChatSection({ currentUser }) {
 
         .message-bubble.me {
           align-self: flex-end;
-          background: linear-gradient(135deg, var(--accent-color) 0%, #f472b6 100%);
+          background: var(--accent-color);
           color: #ffffff;
           font-weight: 500;
           border-bottom-right-radius: 0.25rem;
-          box-shadow: 0 10px 20px var(--accent-glow);
         }
 
         .message-bubble.other {
